@@ -60,7 +60,11 @@ class Parser:
     def parse_atom(self):
         identifier = self.eat("IDENTIFIER")
 
-        if self.current() and self.current()[0] == "OPERATOR" and self.current()[1] in [">", "<", "="]:
+        if (
+            self.current()
+            and self.current()[0] == "OPERATOR"
+            and self.current()[1] in [">", "<", "="]
+        ):
             op = self.eat("OPERATOR")
             value = self.eat("NUMBER")
             return Comparison(identifier, op, value)

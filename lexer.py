@@ -9,7 +9,7 @@ def tokenize(text):
     tokens = []
 
     # Separar por espacios y símbolos
-    pattern = r'(\bAND\b|\brule\b|\bif\b|\bthen\b|[><=:]|[a-zA-Z_][a-zA-Z0-9_]*|\d+)'
+    pattern = r"(\bAND\b|\brule\b|\bif\b|\bthen\b|[><=:]|[a-zA-Z_][a-zA-Z0-9_]*|\d+)"
     matches = re.findall(pattern, text)
 
     for match in matches:

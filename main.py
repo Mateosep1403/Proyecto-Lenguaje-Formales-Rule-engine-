@@ -1,6 +1,7 @@
 from lexer import tokenize
 from parser import Parser
 
+
 def read_input(filename):
     with open(filename, "r") as file:
         content = file.read()
