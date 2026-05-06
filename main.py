@@ -1,5 +1,6 @@
 from lexer import tokenize
 from parser import Parser
+from interpreter import execute
 
 
 def read_input(filename):
@@ -42,6 +43,12 @@ if __name__ == "__main__":
     parser = Parser(tokens)
     program = parser.parse_program()
 
-    print("=== REGLAS PARSEADAS ===")
-    for rule in program.rules:
-        print(f"Rule: {rule.name} -> Action: {rule.action.identifier}")
+    variables, facts = parse_state(state_text)
+
+result = execute(program, variables, facts)
+
+if result:
+    for fact in result:
+        print(fact)
+else:
+    print("(no output)")
