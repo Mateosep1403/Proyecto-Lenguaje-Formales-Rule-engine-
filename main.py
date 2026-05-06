@@ -1,6 +1,7 @@
 from lexer import tokenize
 from parser import Parser
 from interpreter import execute
+from static_analysis import analyze
 
 
 def read_input(filename):
@@ -52,3 +53,8 @@ if result:
         print(fact)
 else:
     print("(no output)")
+
+analysis_messages = analyze(program, variables, facts)
+
+for message in analysis_messages:
+    print(message)
