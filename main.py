@@ -24,6 +24,7 @@ def parse_state(state_text):
 
     for line in lines:
         line = line.strip()
+
         if not line:
             continue
 
@@ -37,6 +38,7 @@ def parse_state(state_text):
 
 
 if __name__ == "__main__":
+
     rules_text, state_text = read_input("input.txt")
 
     tokens = tokenize(rules_text)
@@ -46,15 +48,20 @@ if __name__ == "__main__":
 
     variables, facts = parse_state(state_text)
 
-result = execute(program, variables, facts)
+    # Ejecutar motor
+    result = execute(program, variables, facts)
 
-if result:
+    # Ejecutar análisis estático
+    analysis_messages = analyze(program, variables, facts)
+
+    # Imprimir resultados del motor
     for fact in result:
         print(fact)
-else:
-    print("(no output)")
 
-analysis_messages = analyze(program, variables, facts)
+    # Imprimir análisis
+    for message in analysis_messages:
+        print(message)
 
-for message in analysis_messages:
-    print(message)
+    # Si no hubo nada
+    if not result and not analysis_messages:
+        print("(no output)")

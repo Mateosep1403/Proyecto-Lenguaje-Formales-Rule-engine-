@@ -5,9 +5,20 @@ def evaluate_condition(condition, variables, facts):
 
     # AND
     if isinstance(condition, AndCondition):
-        return evaluate_condition(
-            condition.left, variables, facts
-        ) and evaluate_condition(condition.right, variables, facts)
+
+        return (
+            evaluate_condition(
+                condition.left,
+                variables,
+                facts
+            )
+            and
+            evaluate_condition(
+                condition.right,
+                variables,
+                facts
+            )
+        )
 
     # Comparaciones
     elif isinstance(condition, Comparison):
@@ -30,8 +41,9 @@ def evaluate_condition(condition, variables, facts):
         elif operator == "=":
             return variable_value == value
 
-    # Factos activos
+    # Facts activos
     elif isinstance(condition, Fact):
+
         return condition.identifier in facts
 
     return False
@@ -39,7 +51,11 @@ def evaluate_condition(condition, variables, facts):
 
 def execute(program, variables, initial_facts):
 
+    # Facts activos totales
     active_facts = set(initial_facts)
+
+    # SOLO los generados por reglas
+    generated_facts = set()
 
     changed = True
 
@@ -51,15 +67,25 @@ def execute(program, variables, initial_facts):
 
         for rule in program.rules:
 
-            if evaluate_condition(rule.condition, variables, active_facts):
+            if evaluate_condition(
+                rule.condition,
+                variables,
+                active_facts
+            ):
 
                 action_fact = rule.action.identifier
 
                 if action_fact not in active_facts:
+
                     new_facts.add(action_fact)
 
         if new_facts:
+
             active_facts.update(new_facts)
+
+            generated_facts.update(new_facts)
+
             changed = True
 
-    return sorted(active_facts)
+    # Retornar SOLO los nuevos facts
+    return sorted(generated_facts)

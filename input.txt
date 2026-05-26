@@ -1,9 +1,11 @@
 rule r1:
-if temp > 30 then fan_on
-
+if a then b
 rule r2:
-if humidity < 50 then fan_on
-
+if b then c
+rule r3:
+if c then d
+rule r4:
+if d then e
 ---
-temp = 35
-humidity = 40
+a
+
